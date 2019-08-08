@@ -28,4 +28,6 @@
     价格：<input type="text" name="price"><br>
     <input type="submit" value="提交">
   </form>
+  <hr>
+  <a href="${pageContext.request.contextPath}/testSession3">SpringMVC-@ModelAttribute注意点</a>
 </html>

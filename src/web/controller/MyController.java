@@ -3,6 +3,7 @@ package web.controller;
 import domain.Goods;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -21,7 +22,8 @@ type
 		*/
 //把model中key为name的值存到session中-----》@SessionAttributes("name")
 //@SessionAttributes(value = {"name","name2"})
-@SessionAttributes(types = String.class)
+/*@SessionAttributes(types = String.class)*/
+@SessionAttributes(value = "sessionGoodsKey" )
 public class MyController {
 
     @RequestMapping("testModelAndView")
@@ -90,10 +92,29 @@ public class MyController {
         return "result3.jsp";
     }
 
+    @RequestMapping("testSession3")
+    public String testSession3(Model model){
+        Goods goods = new Goods();
+        goods.setName("sessionGoodsName");
+        goods.setPrice("sessionGoodsPrice");
+        model.addAttribute("sessionGoodsKey",goods);
+        return "result3.jsp";
+    }
+
+    //此方法就会在对应的映射方法执行之前自动调用
+    //并且会自动的将model提前传到方法中
+    @ModelAttribute
+    public void testModelAttribute(Model model){
+        //会先把session中的内容放到model
+        //在ModelAttribute写的内容会覆盖掉session的内容
+        System.out.println("--------------------------");
+        System.out.println(model);
+        System.out.println("ModelAttribute执行了");
+    }
     @RequestMapping("testModelAttribute")
     //会自动的把对应的模型存放在model中
-    public String testModelAttribute(Goods Mygoods,Model model){
-        System.out.println(Mygoods);
+    public String testModelAttribute(@ModelAttribute("mygoods") Goods mygoods,Model model){
+        System.out.println(mygoods);
         System.out.println(model.asMap());
         return "result3.jsp";
     }

@@ -14,5 +14,6 @@
     <h1>Result3.jsp</h1>
     <h2>${goods.name}</h2>
     <h2>${goods.price}</h2>
+    <h2>${sessionScope.sessionGoodsKey}</h2>
 </body>
 </html>
